@@ -1,1 +1,1 @@
-web: mvn compile exec:java -Dkms.url=ws://18.219.2.46:8888/kurento
+heroku ps:scale web=1
