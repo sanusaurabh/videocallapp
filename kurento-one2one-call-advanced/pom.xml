@@ -24,7 +24,7 @@
 	<!-- Project configuration -->
 
 	<properties>
-		<demo.port>8080</demo.port>
+		<demo.port>8000</demo.port>
 		<start-class>org.kurento.tutorial.one2onecalladv.One2OneCallAdvApp</start-class>
 		<version.kurento-datachannelexample>6.6.0</version.kurento-datachannelexample>
 	</properties>
