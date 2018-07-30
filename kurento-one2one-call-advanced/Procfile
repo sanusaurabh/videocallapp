@@ -1,2 +1,1 @@
-
-web: java kurento-one2one-call-advanced/src/main/org/kurento/tutorial/one2onecalladv/One2OneCallAdvApp
+web: java -jar target/kurento-one2one-call-advanced-6.7.2-SNAPSHOT.jar
