@@ -1,0 +1,217 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Maven coordinates -->
+	<parent>
+		<groupId>org.kurento.tutorial</groupId>
+		<artifactId>kurento-tutorial</artifactId>
+		<version>6.7.2-SNAPSHOT</version>
+	</parent>
+	<artifactId>kurento-one2one-call-advanced</artifactId>
+	<packaging>jar</packaging>
+
+	<!-- Project-level information -->
+	<name>Kurento Java Tutorial - One2One Call Advanced</name>
+	<description>WebRTC one to one video call with recording and filtering</description>
+	<scm>
+		<url>https://github.com/Kurento/kurento-tutorial-java</url>
+		<connection>scm:git:git://github.com/Kurento/kurento-tutorial-java.git</connection>
+		<developerConnection>scm:git:git@github.com:Kurento/kurento-tutorial-java.git</developerConnection>
+	</scm>
+
+	<!-- Project configuration -->
+
+	<properties>
+		<demo.port>8443</demo.port>
+		<start-class>org.kurento.tutorial.one2onecalladv.One2OneCallAdvApp</start-class>
+		<version.kurento-datachannelexample>6.6.0</version.kurento-datachannelexample>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>kurento-snapshots</id>
+			<name>Kurento Snapshots</name>
+			<url>https://maven.openvidu.io/archiva/repository/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>kurento-snapshots</id>
+			<name>Kurento Snapshots</name>
+			<url>https://maven.openvidu.io/archiva/repository/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.kurento.module</groupId>
+			<artifactId>datachannelexample</artifactId>
+			<version>${version.kurento-datachannelexample}</version>
+		</dependency>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+		</dependency>
+
+		<!-- WebJars -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>webjars-locator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>jquery</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>bootstrap</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>demo-console</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>ekko-lightbox</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>webrtc-adapter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>draggabilly</artifactId>
+		</dependency>
+
+		<!-- Kurento -->
+		<dependency>
+			<groupId>org.kurento</groupId>
+			<artifactId>kurento-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.kurento</groupId>
+			<artifactId>kurento-utils-js</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>application.properties</include>
+					<include>banner.txt</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<!--<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.6.0</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>java</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<mainClass>org.kurento.tutorial.one2onecalladv.One2OneCallAdvApp</mainClass>
+						</configuration>
+					</plugin>-->
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+						<configuration>
+							<classifier>exec</classifier>
+							<executable>true</executable>
+							<layout>ZIP</layout>
+							<mainClass>${start-class}</mainClass>
+							<jvmArguments>
+								-Dkms.url=ws://18.219.2.46:8888/kurento
+							</jvmArguments>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<configuration>
+							<descriptor>src/assembly/bin.xml</descriptor>
+							<finalName>${project.artifactId}-${project.version}</finalName>
+							<appendAssemblyId>false</appendAssemblyId>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<configuration>
+									<tasks>
+										<copy
+											file="${project.build.directory}/target/${project.artifactId}-${project.version}-bin.zip"
+											tofile="${project.build.directory}/target/${project.artifactId}-${project.version}.zip" />
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>no-assembly</id>
+		</profile>
+	</profiles>
+
+</project>
