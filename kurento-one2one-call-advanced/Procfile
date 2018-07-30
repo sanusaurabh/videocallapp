@@ -1,1 +1,2 @@
-heroku ps:scale web=1
+
+web: java kurento-one2one-call-advanced/src/main/org/kurento/tutorial/one2onecalladv/One2OneCallAdvApp
