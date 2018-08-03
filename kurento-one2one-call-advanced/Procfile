@@ -1,1 +1,0 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/kurento-one2one-call-advanced-6.7.2-SNAPSHOT.jar
